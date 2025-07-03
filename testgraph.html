@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Grafic Stomac – Multicolor</title>
+  <title>Grafic Meridian Interactiv</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -14,6 +14,16 @@
       align-items: center;
     }
 
+    h2 {
+      margin-bottom: 1rem;
+    }
+
+    select {
+      margin-bottom: 2rem;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+    }
+
     .bar-container {
       position: relative;
       width: 600px;
@@ -21,28 +31,26 @@
       display: flex;
       border: 3px solid #000;
       box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
-      margin-bottom: 60px;
     }
 
     .segment {
       flex: 1;
     }
 
-    .red   { background-color: #f00; }
-    .yellow{ background-color: #ff0; }
-    .blue  { background-color: #1e40af; }
+    .red { background-color: #f00; }
+    .yellow { background-color: #ff0; }
+    .blue { background-color: #1e40af; }
     .green { background-color: #22c55e; }
 
     .arrow {
       position: absolute;
-      top: -40px;
+      bottom: -30px;
       width: 0;
       height: 0;
       border-left: 15px solid transparent;
       border-right: 15px solid transparent;
-      border-bottom: 30px solid #777;
-      left: 50%;
-      transform: translateX(-50%);
+      border-top: 30px solid #777; /* vârful în jos */
+      transition: left 0.4s ease;
       filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));
     }
   </style>
@@ -51,8 +59,17 @@
 
   <h2>Stare Meridian Stomac</h2>
 
+  <select onchange="mutaSageata(this.value)">
+    <option value="0">⬅ Hipofuncție severă</option>
+    <option value="1">⬅ Hipofuncție moderată</option>
+    <option value="2">⬅ Dezechilibru ușor</option>
+    <option value="3" selected>⚖️ Echilibru</option>
+    <option value="4">➡ Dezechilibru ușor</option>
+    <option value="5">➡ Hiperfuncție moderată</option>
+    <option value="6">➡ Hiperfuncție severă</option>
+  </select>
+
   <div class="bar-container">
-    <!-- Segmentele colorate (de la stânga la dreapta) -->
     <div class="segment red"></div>
     <div class="segment yellow"></div>
     <div class="segment blue"></div>
@@ -61,9 +78,16 @@
     <div class="segment yellow"></div>
     <div class="segment red"></div>
 
-    <!-- Săgeata centrală -->
-    <div class="arrow" id="indicator"></div>
+    <div class="arrow" id="indicator" style="left: 50%;"></div>
   </div>
+
+  <script>
+    function mutaSageata(index) {
+      const total = 7;
+      const procent = (index / (total - 1)) * 100;
+      document.getElementById('indicator').style.left = `${procent}%`;
+    }
+  </script>
 
 </body>
 </html>
