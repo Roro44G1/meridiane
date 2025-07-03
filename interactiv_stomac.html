@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grafic Interactiv Meridian Stomac</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    
+    <style>
+        /* Stiluri specifice pentru acest grafic, integrate cu style.css */
+        body {
+            background-color: #f8f9fa; /* Fundalul general al paginii pentru vizualizare */
+        }
+        .infographic-container {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: none; /* Elimină umbra principală dacă este inclus într-un container mai mare */
+            border: none; /* Elimină bordura principală */
+        }
+        h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: 2em;
+            font-weight: 700;
+            color: #0A2463;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        select {
+            margin-bottom: 2rem;
+            padding: 0.75rem 1.5rem;
+            font-size: 1.1rem;
+            border-radius: 0.5rem;
+            border: 2px solid #3E92CC;
+            background-color: #e0f2f7;
+            color: #0A2463;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.2s ease-in-out;
+        }
+        select:hover {
+            border-color: #0A2463;
+            background-color: #d1eff6;
+        }
+        select:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(62, 146, 204, 0.4);
+        }
+
+        .bar-container {
+            position: relative;
+            width: 700px; /* Lățime mărită pentru mai mult spațiu */
+            height: 40px; /* Înălțime mărită */
+            display: flex;
+            border: 3px solid #0A2463; /* Bordură mai închisă */
+            border-radius: 8px; /* Borduri rotunjite */
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4); /* Umbră mai pronunțată */
+            overflow: hidden; /* Asigură că segmentele respectă bordura rotunjită */
+        }
+
+        .segment {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: white; /* Text alb pentru vizibilitate */
+            font-size: 0.9em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+        }
+
+        /* Culori definite conform cerințelor */
+        .segment.extreme-red { background-color: #D8315B; } /* Roșu */
+        .segment.moderate-yellow { background-color: #F4C150; } /* Galben */
+        .segment.tendency-blue { background-color: #3E92CC; } /* Albastru */
+        .segment.balanced-green { background-color: #06D6A0; } /* Verde */
+
+        .arrow {
+            position: absolute;
+            bottom: -35px; /* Ajustat pentru noua înălțime a barei */
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent; /* Săgeată mai mare */
+            border-right: 20px solid transparent;
+            border-top: 40px solid #212529; /* Vârful în jos, culoare mai închisă */
+            transform: translateX(-50%); /* Centrare perfectă */
+            transition: left 0.4s ease-in-out; /* Tranziție mai lină */
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+            z-index: 10; /* Asigură că săgeata e deasupra */
+        }
+
+        .info-box {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Umbră mai pronunțată */
+            padding: 1.5rem;
+            margin-top: 3rem; /* Spațiu mai mare sub bară */
+            width: 700px; /* Lățime egală cu bara */
+            border: 1px solid #ddd; /* Bordură subtilă */
+        }
+
+        .info-box h3 {
+            font-size: 1.4em;
+            color: #0A2463;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            border-bottom: 2px dashed #3E92CC; /* Bordură sub titlu */
+            padding-bottom: 0.5rem;
+        }
+        .info-box p {
+            font-size: 1.05em;
+            margin-bottom: 0.75rem;
+            color: #333;
+        }
+        .info-box ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            font-size: 1em;
+            color: #475569;
+        }
+        .info-box li {
+            margin-bottom: 0.4rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="infographic-container">
+        <h2>Evaluare interactivă: starea meridianului stomac</h2>
+
+        <select onchange="mutaSageata(this.value)">
+            <option value="0">Hipofuncție severă</option>
+            <option value="1">Hipofuncție moderată</option>
+            <option value="2">Dezechilibru ușor</option>
+            <option value="3" selected>Echilibru</option>
+            <option value="4">Dezechilibru ușor</option>
+            <option value="5">Hiperfuncție moderată</option>
+            <option value="6">Hiperfuncție severă</option>
+        </select>
+
+        <div class="bar-container">
+            <div class="segment extreme-red">1</div>
+            <div class="segment moderate-yellow">2</div>
+            <div class="segment tendency-blue">3</div>
+            <div class="segment balanced-green">4</div>
+            <div class="segment tendency-blue">5</div>
+            <div class="segment moderate-yellow">6</div>
+            <div class="segment extreme-red">7</div>
+
+            <div class="arrow" id="indicator" style="left: 50%;"></div>
+        </div>
+
+        <div id="infoDisplay" class="info-box">
+            <!-- Informațiile vor fi afișate aici -->
+        </div>
+    </div>
+
+    <footer class="footer-copyright">
+        <p>Copyright: dr.ing. Radu Pascu - 2025</p>
+    </footer>
+
+    <script>
+        const meridianStomachData = [
+            {
+                stare: "Hipofuncție severă",
+                fiziologic: "Digestie extrem de lentă, balonare severă cronică, greață persistentă, lipsă totală de apetit, senzație constantă de rece în stomac. Pot apărea gastrită atrofică, ulcer gastric sever. Scădere energetică pronunțată, picioare foarte îngreunate, musculatură lăsată sever. Tendință spre anemie.",
+                nutritie: "Nevoie stringentă de alimente calde, ușor digerabile (supe creme de legume, piureuri), porții foarte mici și frecvente. Evitarea totală a alimentelor reci, crude, grele, grase, picante. Lichide calde.",
+                suplimente: "Enzime digestive puternice (bromelaină, papaină), betaină HCl (sub supraveghere medicală), complex de Vitamine B, zinc, magneziu, glutamină, probiotice pentru refacerea florei intestinale.",
+                emotional: "Apatie profundă, lipsă totală de încredere în sine, incapacitate de a lua decizii, ezitare extremă, tendințe nevrotice acute, melancolie, tristețe profundă, iritabilitate extremă. Lipsa bucuriei de a trăi.",
+                relatiiParinti: "Conflict profund și nerezolvat cu influența maternă (Yin), blocând capacitatea de a asimila și de a te hrăni emoțional din relații. Lipsa acceptării de sine și a celorlalți."
+            },
+            {
+                stare: "Hipofuncție moderată",
+                fiziologic: "Digestie lentă, disconfort abdominal după masă, balonare frecventă, uneori greață sau reflux, apetit capricios (mofturos). Predispoziție la gastrită sau ulcer. Oboseală ușoară, picioare greoaie, musculatură cu tonus scăzut. Tendință spre anemie.",
+                nutritie: "Mese calde și gătite ușor. Evitarea alimentelor reci, greu digerabile, prânzurilor copioase. Concentrarea pe legume fierte, cereale integrale bine gătite, proteine slabe.",
+                suplimente: "Complex B, magneziu, zinc, probiotice. Suplimente cu enzime digestive ușoare.",
+                emotional: "Lipsa încrederii în sine, tendințe nevrotice, îngrijorare, ezitare, lipsa inițiativei. Senzație de inconfort, oftat frecvent, 'ceață mentală'.",
+                relatiiParinti: "Dificultăți în a accepta și a integra aspecte ale figurii materne, afectând capacitatea de a te hrăni emoțional din relații și de a te simți acceptat."
+            },
+            {
+                stare: "Dezechilibru ușor",
+                fiziologic: "Digestie ocazional lentă, disconfort minor, uneori reflux acid. Sensibilitate la alimente reci sau grele. Poftă de dulciuri. Energie fluctuează.",
+                nutritie: "Dietă echilibrată, cu accent pe mese calde și gătite. Reducerea alimentelor procesate, zaharurilor și grăsimilor nesănătoase. Mestecare conștientă.",
+                suplimente: "Multivitamine/minerale, suplimente cu enzime digestive în caz de nevoie.",
+                emotional: "Ușoară neliniște, dificultăți de a lua decizii minore, uneori iritabilitate. Senzație de 'gol în stomac' sau nevoie de hrană emoțională.",
+                relatiiParinti: "Unele tensiuni persistente sau neînțelegeri subtile legate de influența maternă, care pot duce la o presiune internă și la dificultăți în acceptarea lor așa cum sunt."
+            },
+            {
+                stare: "Echilibru",
+                fiziologic: "Digestie normală și eficientă, energie stabilă și constantă, absența disconfortului gastrointestinal. Piele și musculatură cu tonus bun. Abilitate bună de a asimila nutrienții.",
+                nutritie: "Dietă variată și echilibrată, cu un bun raport între mese calde și crude (bine mestecate). Consum conștient de alimente integrale.",
+                suplimente: "Probiotice de întreținere pentru un microbiom sănătos, complex de Vitamine B, spirulină.",
+                emotional: "Claritate mentală, stabilitate emoțională, receptivitate la experiențe noi, capacitate bună de a gestiona stresul, acceptare de sine și a celorlalți. Lipsa grijilor excesive.",
+                relatiiParinti: "Echilibru între influența maternă (hrănire, acceptare) și autoritatea paternă (structură, direcție), permițând o bună integrare a ambelor aspecte în propria personalitate. Capacitate de a te simți iubit și acceptat."
+            },
+            {
+                stare: "Dezechilibru ușor",
+                fiziologic: "Digestie uneori accelerată, senzație de foame rapidă ('foame de lup') chiar și după mese consistente. Tendință spre constipație (cronică), piele aspră și uscată, herpes.",
+                nutritie: "Nevoie de mese regulate, bine echilibrate, cu fibre suficiente pentru a încetini digestia. Evitarea mâncatului pe fugă.",
+                suplimente: "Fibre solubile, probiotice.",
+                emotional: "Ambiții mari, dar cu ușoară frustrare, iritabilitate ocazională. Nemulțumire subtilă, incapacitate de a se relaxa complet.",
+                relatiiParinti: "Tensiuni minore sau așteptări nerealiste în relația cu părinții, care pot duce la o presiune internă și la dificultăți în acceptarea lor așa cum sunt."
+            },
+            {
+                stare: "Hiperfuncție moderată",
+                fiziologic: "Digestie foarte rapidă, poftă de mâncare excesivă și continuă ('foame de lup'), chiar și în lipsa apetitului real. Tensiune în picioare și umeri. Mușchi pectorali tensionați. Tendință spre anemie.",
+                nutritie: "Frecvența meselor trebuie controlată. Mese mai mici, mai dense nutrițional, cu accent pe fibre și proteine. Evitarea stimulentelor.",
+                suplimente: "Magneziu (pentru relaxare), suplimente pentru reglarea apetitului (sub îndrumare).",
+                emotional: "Dorințe exagerate, nerăbdare, caracter vulcanic. Agitație, iritabilitate, nemulțumire cronică. Incapacitate de a aprecia ce are și de a se relaxa.",
+                relatiiParinti: "Conflicte deschise sau o rebeliune activă împotriva autorității paterne, ceea ce poate duce la o stare de tensiune internă și la incapacitatea de a integra lecțiile de viață."
+            },
+            {
+                stare: "Hiperfuncție severă",
+                fiziologic: "Foame de lup constantă, mâncat compulsiv fără satisfacție, tulburări digestive severe (ulcer, gastrită acută, spasme intestinale), deshidratare cronică. Picioare tensionate, umeri tensionați, probleme dentare și gingivale.",
+                nutritie: "Nevoie de intervenție medicală și nutrițională specializată. Dietă strictă, posibil lichidă sau semi-lichidă, pentru a permite sistemului digestiv să se vindece.",
+                suplimente: "Suplimente complexe pentru susținerea funcției digestive și nervoase, sub strictă supraveghere medicală.",
+                emotional: "Ambiții nemăsurate, frustrare extremă, furie, amărăciune persistentă. Persoana este veșnic grăbită, lucrează ore suplimentare compulsive, iritabilă, complet nemulțumită, incapabilă să-și atingă scopul sau să accepte iubirea și mediul înconjurător. Sentiment de izolare și lipsă de conexiune.",
+                relatiiParinti: "Refuz total de a se conforma sau de a accepta părinții, ducând la un conflict interior devastator, care erodează sentimentul de siguranță și liniște."
+            }
+        ];
+
+        function afiseazaInformatii(index) {
+            const data = meridianStomachData[index];
+            const infoDisplay = document.getElementById('infoDisplay');
+            infoDisplay.innerHTML = `
+                <h3>Stare: ${data.stare}</h3>
+                <p><strong>Fiziologic:</strong> ${data.fiziologic}</p>
+                <p><strong>Nutriție:</strong> ${data.nutritie}</p>
+                <p><strong>Suplimente:</strong> ${data.suplimente}</p>
+                <p><strong>Emoțional:</strong> ${data.emotional}</p>
+                <p><strong>Relații cu părinții:</strong> ${data.relatiiParinti}</p>
+            `;
+        }
+
+        function mutaSageata(index) {
+            const total = 7;
+            const procent = (index / (total - 1)) * 100;
+            document.getElementById('indicator').style.left = `${procent}%`;
+            afiseazaInformatii(index); // Afiseaza informatiile cand se misca sageata
+        }
+
+        // Inițializare la încărcarea paginii
+        document.addEventListener('DOMContentLoaded', () => {
+            const selectElement = document.querySelector('select');
+            mutaSageata(selectElement.value); // Setează săgeata și informațiile inițiale
+        });
+    </script>
+
+</body>
+</html>
