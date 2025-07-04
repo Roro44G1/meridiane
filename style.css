@@ -179,7 +179,7 @@ body {
         }
         td:first-child {
             font-weight: 600;
-            color: #06D6A0; /* green from palette */
+            color:  #0A2463;       /*#06D6A0; /* green from palette */
         }
         .section-title {
             font-size: 1.8em;
