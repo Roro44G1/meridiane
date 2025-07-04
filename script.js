@@ -22,7 +22,7 @@ const colorPalette = {
     gallbladderPale: '#f0fff0', // Lemn - Vezică Biliară (Pale mint green)
     governingVesselPale: '#fffacd', // Yang - Vas Guvernator (Pale gold)
     conceptionVesselPale: '#f8f8ff'  // Yin - Vas de Concepție (Pale silver-blue)
-    indexinteractivPale: '#f7f0df'  // Yin - Vas de Concepție (Pale silver-blue)
+    indexInteractivPale: '#f7f0df'  // Yin - Vas de Concepție (Pale silver-blue)
 };
 
 const tooltipConfig = {
@@ -45,7 +45,7 @@ const tooltipConfig = {
             labels: {
                 font: {
                     family: 'Inter',
-                    size: 14
+                    size: 15
                 },
                 color: '#212529'
             }
