@@ -22,7 +22,6 @@ const colorPalette = {
     gallbladderPale: '#f0fff0', // Lemn - Vezică Biliară (Pale mint green)
     governingVesselPale: '#fffacd', // Yang - Vas Guvernator (Pale gold)
     conceptionVesselPale: '#f8f8ff'  // Yin - Vas de Concepție (Pale silver-blue)
-    indexInteractivPale: '#f7f0df'  // Yin - Vas de Concepție (Pale silver-blue)
 };
 
 const tooltipConfig = {
@@ -45,7 +44,7 @@ const tooltipConfig = {
             labels: {
                 font: {
                     family: 'Inter',
-                    size: 15
+                    size: 14
                 },
                 color: '#212529'
             }
@@ -88,7 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
         'Meridianul vezică biliară': colorPalette.gallbladderPale,
         'Meridianul vas guvernator': colorPalette.governingVesselPale,
         'Meridianul vas de concepție': colorPalette.conceptionVesselPale,
-        'Index interactiv': colorPalette.indexinteractivPale
     };
 
     meridianCards.forEach(card => {
