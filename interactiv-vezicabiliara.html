@@ -1,1 +1,290 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grafic Interactiv Meridian Vezică Biliară</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    
+    <style>
+        /* Stiluri specifice pentru acest grafic, integrate cu style.css */
+        body {
+            background-color: #f8f9fa; /* Fundalul general al paginii pentru vizualizare */
+        }
+        .infographic-container {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: none; /* Elimină umbra principală dacă este inclus într-un container mai mare */
+            border: none; /* Elimină bordura principală */
+        }
+        h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: 2em;
+            font-weight: 700;
+            color: #0A2463;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        select {
+            margin-bottom: 2rem;
+            padding: 0.75rem 1.5rem;
+            font-size: 1.1rem;
+            border-radius: 0.5rem;
+            border: 2px solid #3E92CC;
+            background-color: #e0f2f7;
+            color: #0A2463;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.2s ease-in-out;
+        }
+        select:hover {
+            border-color: #0A2463;
+            background-color: #d1eff6;
+        }
+        select:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(62, 146, 204, 0.4);
+        }
+
+        .bar-container {
+            position: relative;
+            width: 700px; /* Lățime mărită pentru mai mult spațiu */
+            height: 40px; /* Înălțime mărită */
+            display: flex;
+            border: 3px solid #0A2463; /* Bordură mai închisă */
+            border-radius: 8px; /* Borduri rotunjite */
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4); /* Umbră mai pronunțată */
+            overflow: hidden; /* Asigură că segmentele respectă bordura rotunjită */
+        }
+
+        .segment {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: white; /* Text alb pentru vizibilitate */
+            font-size: 0.9em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+        }
+
+        /* Culori definite conform cerințelor */
+        .segment.extreme-red { background-color: #D8315B; } /* Roșu */
+        .segment.moderate-yellow { background-color: #F4C150; } /* Galben */
+        .segment.tendency-blue { background-color: #3E92CC; } /* Albastru */
+        .segment.balanced-green { background-color: #06D6A0; } /* Verde */
+
+        .arrow {
+            position: absolute;
+            bottom: -35px; /* Ajustat pentru noua înălțime a barei */
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent; /* Săgeată mai mare */
+            border-right: 20px solid transparent;
+            border-top: 40px solid #212529; /* Vârful în jos, culoare mai închisă */
+            transform: translateX(-50%); /* Centrare perfectă */
+            transition: left 0.4s ease-in-out; /* Tranziție mai lină */
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+            z-index: 10; /* Asigură că săgeata e deasupra */
+        }
+
+        .info-box {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Umbră mai pronunțată */
+            padding: 1.5rem;
+            margin-top: 3rem; /* Spațiu mai mare sub bară */
+            width: 700px; /* Lățime egală cu bara */
+            border: 1px solid #ddd; /* Bordură subtilă */
+        }
+
+        .info-box h3 {
+            font-size: 1.4em;
+            color: #0A2463;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            border-bottom: 2px dashed #3E92CC; /* Bordură sub titlu */
+            padding-bottom: 0.5rem;
+        }
+        .info-box p {
+            font-size: 1.05em;
+            margin-bottom: 0.75rem;
+            color: #333;
+        }
+        .info-box ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            font-size: 1em;
+            color: #475569;
+        }
+        .info-box li {
+            margin-bottom: 0.4rem;
+        }
+        .meridian-section {
+            width: 100%;
+            margin-bottom: 4rem;
+            padding-top: 2rem;
+            border-top: 1px dashed #ccc;
+        }
+        .meridian-section:first-of-type {
+            border-top: none;
+            padding-top: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="infographic-container">
+        <div class="meridian-section">
+            <h2>Evaluare interactivă: starea meridianului vezică biliară</h2>
+
+            <select onchange="mutaSageata('vezica-biliara', this.value)">
+                <option value="0">Hipofuncție severă</option>
+                <option value="1">Hipofuncție moderată</option>
+                <option value="2">Dezechilibru ușor</option>
+                <option value="3" selected>Echilibru</option>
+                <option value="4">Dezechilibru ușor</option>
+                <option value="5">Hiperfuncție moderată</option>
+                <option value="6">Hiperfuncție severă</option>
+            </select>
+
+            <div class="bar-container">
+                <div class="segment extreme-red">1</div>
+                <div class="segment moderate-yellow">2</div>
+                <div class="segment tendency-blue">3</div>
+                <div class="segment balanced-green">4</div>
+                <div class="segment tendency-blue">5</div>
+                <div class="segment moderate-yellow">6</div>
+                <div class="segment extreme-red">7</div>
+
+                <div class="arrow" id="indicator-vezica-biliara" style="left: 50%;"></div>
+            </div>
+
+            <div id="infoDisplay-vezica-biliara" class="info-box">
+                <!-- Informațiile vor fi afișate aici -->
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-copyright">
+        <p>Copyright: dr.ing. Radu Pascu - 2025</p>
+    </footer>
+
+    <script>
+        const meridianGallbladderData = [
+            {
+                stare: "Hipofuncție severă",
+                fiziologic: "Dureri colerice de cap severe (migrene cronice, dureri de cap paralizante de-a lungul umerilor și cefei până la frunte). Dureri musculare severe, ale gambei și gleznei. Probleme grave la vezica biliară, pietre la vezica biliară recurente. Coaste și torace congestionate sever, rigiditate extremă la articulația șoldului. Probleme digestive severe legate de metabolismul grăsimilor sau gaze cronice. Tensiune intensă în gât și umăr. Febră și frisoane persistente, greață cronică. Lipsa totală a apetitului, sclerotică îngălbenită sever, presiune intensă în ochi, gust amar persistent în gură. Dureri severe în umeri, mușchi extrem de rigizi, constipație cronică. Dorința obsesivă de a consuma dulciuri, refuzul total al mâncărurilor acre. Ganglioni umflați sever în zona axilelor, secreții abundente și persistente.",
+                nutritie: "Nevoie stringentă de intervenție medicală și nutrițională specializată. Dietă strictă, ușor digerabilă, cu alimente calde, pure, care susțin funcția biliară și hepatică (legume verzi, alimente amare, uleiuri sănătoase în cantități mici). Evitarea totală a alimentelor grase, prăjite, procesate, alcoolului.",
+                suplimente: "Suplimente complexe pentru suport biliar (săruri biliare, lecitină, taurină), enzime digestive, colină, inozitol, antioxidanți (vitamina C, E, seleniu), magneziu, Vitamine B.",
+                emotional: "Indecizie paralizantă, predispoziție extremă către suprimarea sentimentelor, enervare cronică, timiditate severă. Persoana este sperioasă, îi lipsește total puterea și curajul pentru a duce la bun sfârșit lucrurile. Sentiment de 'caracter moral diminuat', gelozie, suspiciune și ranchiună de lungă durată. Incapacitatea de a lua decizii sau de a acționa.",
+                relatiiParinti: "Conflict profund și nerezolvat cu influența maternă (Yin), manifestat prin incapacitatea de a 'elibera' și 'renunța' la vechile tipare emoționale. Tendința de a reține frustrarea și resentimentele, de a se simți copleșit de emoțiile materne sau de lipsa de suport din partea figurii materne. Dificultăți severe în a elibera trecutul și a ierta.",
+                terapie: "Intervenție medicală și psihologică urgentă. Terapie nutrițională strictă. Suport psihologic intens pentru eliberarea traumelor emoționale legate de 'decizie' și 'curaj'. Meditație de cultivare a hotărârii și a flexibilității. Terapii energetice (acupunctură, *Qi Gong*) pentru a stimula fluxul biliar și a restabili echilibrul elementului lemn."
+            },
+            {
+                stare: "Hipofuncție moderată",
+                fiziologic: "Dureri colerice de cap (migrene, dureri de cap de-a lungul umerilor și cefei până la frunte). Dureri musculare, ale gambei și gleznei. Probleme la vezica biliară, pietre la vezica biliară. Coaste și torace congestionate, rigiditate la articulația șoldului. Probleme digestive legate de metabolismul grăsimilor sau gaze. Tensiune în gât și umăr. Febră și frisoane, greață. Lipsa apetitului, sclerotică îngălbenită, presiune în ochi, gust amar în gură. Dureri în umeri, mușchi rigizi, constipație. Dorința de a consuma multe dulciuri, refuzul mâncărurilor acre. Ganglioni umflați în zona axilelor, secreții abundente.",
+                nutritie: "Dietă antiinflamatorie, cu accent pe alimente care susțin funcția biliară și hepatică (legume verzi, alimente amare, uleiuri sănătoase în cantități mici). Reducerea alimentelor grase, prăjite, procesate.",
+                suplimente: "Săruri biliare, lecitină, taurină, enzime digestive, colină, inozitol, antioxidanți (vitamina C, E, seleniu), magneziu, Vitamine B.",
+                emotional: "Indecizie, predispoziție către suprimarea sentimentelor, enervare, timiditate. Persoana este sperioasă, îi lipsește puterea și curajul pentru a duce la bun sfârșit lucrurile. Sentiment de 'caracter moral diminuat', gelozie, suspiciune și ranchiună de lungă durată. Dificultăți în a lua decizii sau de a acționa.",
+                relatiiParinti: "Dificultăți în a 'elibera' și 'renunța' la vechile tipare emoționale, o tendință de a reține frustrarea și resentimentele, de a se simți copleșit de emoțiile materne sau de lipsa de suport din partea figurii materne. Dificultăți în a elibera trecutul și a ierta.",
+                terapie: "Dietă de suport biliar și hepatic. Jurnalism terapeutic pentru explorarea sentimentelor de indecizie și timiditate. Meditații de cultivare a curajului și a hotărârii. Exerciții de *Qi Gong* sau *Tai Chi* pentru a stimula fluxul energetic."
+            },
+            {
+                stare: "Dezechilibru ușor",
+                fiziologic: "Dureri colerice de cap ușoare, ocazional dureri musculare, ale gambei și gleznei. Ușoare probleme la vezica biliară. Coaste și torace ușor congestionate, ușoară rigiditate la articulația șoldului. Ușoare probleme digestive legate de metabolismul grăsimilor. Ușoară tensiune în gât și umăr. Ocazional febră sau frisoane, ușoară greață. Ușoară lipsă a apetitului, sclerotică ușor îngălbenită, ușoară presiune în ochi, gust ușor amar în gură.",
+                nutritie: "Dietă echilibrată, cu atenție la alimentele care pot suprasolicita vezica biliară (grăsimi nesănătoase, prăjeli). Hidratare adecvată. Consum de alimente care susțin detoxifierea.",
+                suplimente: "Multivitamine/minerale de bază, suport de bază pentru ficat și bilă.",
+                emotional: "Ușoară indecizie, tendință spre suprimarea sentimentelor, ușoară enervare, ușoară timiditate. Ușor sperioasă, cu o ușoară lipsă de putere și curaj. Ușoară gelozie sau suspiciune.",
+                relatiiParinti: "Unele tensiuni persistente sau neînțelegeri subtile legate de influența maternă, care pot duce la o presiune internă și la dificultăți în acceptarea lor așa cum sunt.",
+                terapie: "Conștientizarea obiceiurilor alimentare. Practici de mindfulness pentru a reduce neliniștea. Exerciții de respirație pentru calmare. Explorarea surselor de 'hrană emoțională'."
+            },
+            {
+                stare: "Echilibru",
+                fiziologic: "Funcționare optimă a vezicii biliare, digestie eficientă a grăsimilor. Energie musculară și rezistență bune. Sistem limfatic eficient, fără dureri musculare sau oboseală. Fără dureri de cap sau tensiuni în gât și umăr. Somn odihnitor.",
+                nutritie: "Dietă variată și echilibrată, bogată în alimente integrale, proaspete, cu un bun aport de nutrienți. Accent pe alimente de sezon, care susțin energia lemnului.",
+                suplimente: "Suplimente de întreținere dacă este necesar, conform nevoilor individuale.",
+                emotional: "Îndrăzneală, hotărâre, curaj, inițiativă. Capacitatea de a lua decizii clare și de a acționa. Lipsa fricii și a indeciziei. Stabilitate emoțională, acceptare de sine și a celorlalți.",
+                relatiiParinti: "Echilibru între influența maternă (hrănire, acceptare) și autoritatea paternă (structură, direcție), permițând o bună integrare a ambelor aspecte în propria personalitate. Capacitate de a te simți iubit și acceptat.",
+                terapie: "Menținerea obiceiurilor sănătoase. Continuarea practicilor de mindfulness și meditație. Cultivarea recunoștinței și a relațiilor pozitive. Explorarea continuă a sinelui pentru creștere personală."
+            },
+            {
+                stare: "Dezechilibru ușor",
+                fiziologic: "Ușoară iritabilitate, tendință de a fi perfecționist, uneori dificultăți în a elibera tensiunea. Poate ofta frecvent. Ușor distantă emoțional.",
+                nutritie: "Dietă echilibrată, cu atenție la alimentele care pot genera 'căldură' sau stimula excesiv. Hidratare adecvată. Consum de alimente care susțin detoxifierea.",
+                suplimente: "Antioxidanți de bază, suport pentru detoxifiere.",
+                emotional: "Ușoară lipsă a stăpânirii de sine, tendință spre inflăcărare. Uneori râs cu glas tare, neadecvat, zâmbet în situații penibile. Vorbire ușor tulbure, atenție exagerată la muncă. Necesitatea recunoașterii.",
+                relatiiParinti: "Unele tensiuni persistente sau neînțelegeri subtile legate de influența paternă, care pot duce la o presiune internă și la dificultăți în acceptarea lor așa cum sunt.",
+                terapie: "Reevaluarea obiectivelor și a așteptărilor. Practici de relaxare pentru a reduce iritabilitatea. Exerciții de conștientizare a emoțiilor. Dialog deschis cu părinții pentru a rezolva tensiunile."
+            },
+            {
+                stare: "Hiperfuncție moderată",
+                fiziologic: "Iritabilitate, tensiuni nervoase, asumarea a prea multe responsabilități, se află tot timpul pe fugă, se enervează, poate avea frecvent accese de furie. Doarme puțin, întotdeauna face planuri, bate pasul pe loc. În partea dreaptă a plexului solar pot apărea stări neplăcute, chiar dureroase. Rigiditate în articulație șoldului, probleme digestive precum metabolismul slab al grăsimilor.",
+                nutritie: "Nevoie de alimente care 'răcoresc' și 'drenează' excesul de căldură. Evitarea alimentelor picante, prăjite, alcoolului, cofeinei. Hidratare adecvată. Dietă antiinflamatorie.",
+                suplimente: "Antioxidanți, plante cu efect calmant și antiinflamator, suport pentru detoxifiere hepatică.",
+                emotional: "Lipsa stăpânirii de sine, inflăcărare, manie. Râs cu glas tare, neadecvat, zâmbet în situații penibile, vorbire tulbure, atenție exagerată la muncă. Necesitatea recunoașterii. Poate fi obsedată de muncă, insensibilă, autodistructivă, rigidă, lucrează fără răbdare, hipersensibilă, ușor perturbată, apetit enorm.",
+                relatiiParinti: "Conflicte deschise sau o rebeliune activă împotriva autorității paterne, ceea ce poate duce la o stare de tensiune internă și la incapacitatea de a integra lecțiile de viață.",
+                terapie: "Tehnici de gestionare a furiei și nerăbdării. Meditații de acceptare și renunțare la control. Terapie pentru a explora relația cu autoritatea paternă. Activități care canalizează energia în mod constructiv."
+            },
+            {
+                stare: "Hiperfuncție severă",
+                fiziologic: "Iritabilitate extremă, tensiuni nervoase severe, asumarea compulsivă a prea multor responsabilități, stare de fugă constantă, accese incontrolabile de furie. Insomnie severă, planificare obsesivă, senzație de a 'bate pasul pe loc' persistentă. Dureri severe și cronice în partea dreaptă a plexului solar. Rigiditate severă în articulație șoldului, probleme digestive grave legate de metabolismul grăsimilor, gaze cronice.",
+                nutritie: "Nevoie stringentă de intervenție medicală și nutrițională specializată. Dietă strictă, care să elimine orice aliment inflamator sau care generează 'căldură' excesivă. Lichide răcoroase, ceaiuri medicinale, alimente ușoare și pure.",
+                suplimente: "Suplimente complexe pentru suport hepatic și biliar, antioxidanți, detoxifiere, sub strictă supraveghere medicală. Poate fi necesară terapia intensivă.",
+                emotional: "Lipsa totală a stăpânirii de sine, inflăcărare distructivă, manie severă. Râs compulsiv, inadecvat, zâmbet permanent în situații penibile. Vorbire incoerentă, atenție obsesivă la muncă. Necesitatea patologică de recunoaștere. Obsedată de muncă compulsivă, insensibilă, autodistructivă, rigidă, lucrează fără răbdare, hipersensibilă, ușor perturbată, apetit enorm și necontrolat. Stare de furie și amărăciune permanentă și incontrolabilă.",
+                relatiiParinti: "Refuz total de a se conforma sau de a accepta figura paternă, ducând la un conflict interior devastator, care erodează sentimentul de siguranță și liniște. Poate fi o rebeliune extremă împotriva structurii și autorității, cu consecințe grave asupra sănătății.",
+                terapie: "Intervenție medicală și psihologică urgentă. Terapie intensivă pentru gestionarea furiei și frustrării. Meditații de iertare și acceptare. Lucrul profund cu traumele legate de autoritate și control. Reconstruirea relației cu sinele și cu lumea."
+            }
+        ];
+
+
+        // This function needs to be global to be called by onchange
+        function afiseazaInformatii(meridianId, index) {
+            let data;
+            if (meridianId === 'vezica-biliara') {
+                data = meridianGallbladderData[index];
+            }
+            
+            const infoDisplay = document.getElementById(`infoDisplay-${meridianId}`);
+            infoDisplay.innerHTML = `
+                <h3>Stare: ${data.stare}</h3>
+                <p><strong>Fiziologic:</strong> ${data.fiziologic}</p>
+                <p><strong>Nutriție:</strong> ${data.nutritie}</p>
+                <p><strong>Suplimente:</strong> ${data.suplimente}</p>
+                <p><strong>Emoțional:</strong> ${data.emotional}</p>
+                <p><strong>Relații cu părinții:</strong> ${data.relatiiParinti}</p>
+                <p><strong>Terapie:</strong> ${data.terapie}</p>
+            `;
+        }
+
+        // This function needs to be global to be called by onchange
+        function mutaSageata(meridianId, index) {
+            const total = 7;
+            const procent = (index / (total - 1)) * 100;
+            document.getElementById(`indicator-${meridianId}`).style.left = `${procent}%`;
+            afiseazaInformatii(meridianId, index); // Afiseaza informatiile cand se misca sageata
+        }
+
+        // Inițializare la încărcarea paginii
+        document.addEventListener('DOMContentLoaded', () => {
+            const selectGallbladder = document.querySelector('select[onchange*="vezica-biliara"]');
+            if (selectGallbladder) {
+                mutaSageata('vezica-biliara', selectGallbladder.value);
+            }
+        });
+    </script>
+
+</body>
+</html>
 
