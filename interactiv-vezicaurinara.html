@@ -1,1 +1,139 @@
+ <div class="infographic-container">
+        <div class="meridian-section">
+            <h2>Evaluare interactivă: starea meridianului vezică urinară</h2>
 
+            <select onchange="mutaSageata('vezica-urinara', this.value)">
+                <option value="0">Hipofuncție severă</option>
+                <option value="1">Hipofuncție moderată</option>
+                <option value="2">Dezechilibru ușor</option>
+                <option value="3" selected>Echilibru</option>
+                <option value="4">Dezechilibru ușor</option>
+                <option value="5">Hiperfuncție moderată</option>
+                <option value="6">Hiperfuncție severă</option>
+            </select>
+
+            <div class="bar-container">
+                <div class="segment extreme-red">1</div>
+                <div class="segment moderate-yellow">2</div>
+                <div class="segment tendency-blue">3</div>
+                <div class="segment balanced-green">4</div>
+                <div class="segment tendency-blue">5</div>
+                <div class="segment moderate-yellow">6</div>
+                <div class="segment extreme-red">7</div>
+
+                <div class="arrow" id="indicator-vezica-urinara" style="left: 50%;"></div>
+            </div>
+
+            <div id="infoDisplay-vezica-urinara" class="info-box">
+                <!-- Informațiile vor fi afișate aici -->
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-copyright">
+        <p>Copyright: dr.ing. Radu Pascu - 2025</p>
+    </footer>
+
+    <script>
+        const meridianUrinaryBladderData = [
+            {
+                stare: "Hipofuncție severă",
+                fiziologic: "Dureri de cap severe, de ceafă, dureri oculare intense. Rigiditatea dureroasă a coloanei (lombare), de genunchi, gambe și călcâi. Hemoroizi severi, frisoane persistente, stări de leșin, crize de personalitate. Lăcrimare frecventă, incontinență urinară severă, infecții cronice de prostată. Afecțiuni severe ale sistemului osos (artrită, osteoporoză), căderea masivă a părului, încărunțire prematură extinsă, carii dentare multiple. Probleme severe de auz, rigiditatea degetelor mici de la picioare, senzație constantă de frig la nivelul membrelor. Urinare dureroasă, infecții renale și vezicale severe, vezică picurătoare cronică. Dureri paralizante la coloană și rigiditate extremă a zonei lombare, dureri intense la șolduri, picior și talpă. Urină densă și închisă la culoare.",
+                nutritie: "Nevoie stringentă de intervenție medicală și nutrițională specializată. Dietă strictă, ușor digerabilă, cu alimente calde, pure, care susțin funcția renală și echilibrul fluidelor. Evitarea totală a alimentelor reci, crude, procesate, zaharurilor, lactatelor în exces. Lichide calde, supe nutritive, ceaiuri din plante.",
+                suplimente: "Suplimente complexe pentru suport renal și osos (Vitamine D, K, Calciu, Magneziu, Fosfor), suport pentru sistemul nervos (Vitamine B, Omega-3), adaptogeni pentru suport adrenal (sub strictă supraveghere medicală).",
+                emotional: "Nesiguranță paralizantă, timiditate extremă, lipsă totală de curaj, neseriozitate cronică, delăsare profundă, hiperactivitate nervoasă incontrolabilă, stres sever, spaimă și groază constante, lipsa totală a senzației de milă. Neliniște, neglijență, nepasare, fricoșenie extremă, teamă de frig și de noapte. Persoana este sperioasă, mult prea sensibilă, se enervează repede, tot timpul se plânge. Lipsa capacității de a lua decizii clare.",
+                relatiiParinti: "Conflict profund și nerezolvat cu influența maternă (Yin), blocând capacitatea de a se simți în siguranță și de a 'curge' cu viața. Poate reflecta o lipsă de suport emoțional, o teamă de a fi vulnerabil sau o dificultate de a 'elibera' controlul și a permite fluiditatea în relații.",
+                terapie: "Intervenție medicală și psihologică urgentă. Terapie nutrițională strictă. Suport psihologic intens pentru eliberarea fricii și a insecurității. Meditație de împământare și de cultivare a curajului. Terapii energetice (acupunctură, masaj pe coloană) pentru a stimula fluxul energetic și a restabili echilibrul elementului apă."
+            },
+            {
+                stare: "Hipofuncție moderată",
+                fiziologic: "Dureri de cap, de ceafă, dureri oculare. Rigiditatea dureroasă a coloanei (lombare), de genunchi, gambe și călcâi. Hemoroizi, frisoane, stări de leșin, crize de personalitate. Lăcrimare frecventă, incontinență urinară, infecții de prostată. Afecțiuni ale sistemului osos (artrită, osteoporoză), căderea părului, încărunțire prematură, carii dentare. Probleme de auz, rigiditatea degetelor mici de la picioare, senzație de frig permanent la nivelul membrelor. Urinare dureroasă, infecții renale și vezicale, vezică picurătoare. Dureri la coloană și rigiditate a zonei lombare, dureri la șolduri, picior și talpă. Urină densă.",
+                nutritie: "Dietă caldă, echilibrată, bogată în minerale. Alimente care susțin funcția renală și echilibrul fluidelor. Reducerea alimentelor reci, lactate în exces. Ceaiuri din plante, supe. Hidratare adecvată.",
+                suplimente: "Vitamine D, K, Calciu, Magneziu, Fosfor, Vitamine B, Omega-3. Suport pentru glande suprarenale.",
+                emotional: "Nesiguranță, timiditate, lipsă de curaj, neseriozitate, delăsare, hiperactivitate nervoasă, stres, spaimă, groază, lipsa senzației de milă. Neliniște, neglijență, nepasare, fricoșenie, teamă de frig și de noapte. Persoana este sperioasă, mult prea sensibilă, se enervează repede, tot timpul se plânge. Lipsa capacității de a lua decizii clare.",
+                relatiiParinti: "Dificultăți în a se simți în siguranță și susținut emoțional de figura maternă. O tendință de a reține frica sau de a se simți copleșit de emoțiile materne sau de lipsa de suport din partea figurii materne. Dificultăți în a elibera trecutul și a ierta.",
+                terapie: "Dietă de suport renal și osos. Jurnalism terapeutic pentru explorarea fricilor și a sentimentelor de insecuritate. Meditații de împământare și de cultivare a curajului. Exerciții fizice moderate."
+            },
+            {
+                stare: "Dezechilibru ușor",
+                fiziologic: "Dureri de cap ușoare, de ceafă, dureri oculare ușoare. Rigiditatea ușoară a coloanei (lombare), de genunchi, gambe și călcâi. Hemoroizi ușori, frisoane ocazionale. Lăcrimare ușoară, urinare ușor frecventă. Păr ușor fragil, unghii fragile. Probleme ușoare de auz. Urină ușor densă.",
+                nutritie: "Dietă echilibrată, cu accent pe alimente nutritive. Atenție la hidratare.",
+                suplimente: "Multivitamine/minerale de bază.",
+                emotional: "Ușoară nesiguranță, timiditate, lipsă ușoară de curaj. Ușoară neliniște, neglijență, nepasare. Ușor fricoșenie, teamă de frig și de noapte. Persoana este ușor sperioasă, ușor sensibilă, se enervează ușor, se plânge ocazional. Ușoară lipsă a capacității de a lua decizii clare.",
+                relatiiParinti: "Unele tensiuni persistente sau neînțelegeri subtile legate de influența maternă, care pot duce la o presiune internă și la dificultăți în acceptarea lor așa cum sunt.",
+                terapie: "Conștientizarea obiceiurilor. Practici de mindfulness pentru a reduce neliniștea. Exerciții de respirație pentru calmare. Explorarea surselor de 'hrană emoțională'."
+            },
+            {
+                stare: "Echilibru",
+                fiziologic: "Funcționare optimă a vezicii urinare, eliminare eficientă a fluidelor reziduale. Sistem nervos autonom echilibrat. Coloană vertebrală flexibilă, fără dureri. Oase puternice, auz bun. Păr și dinți sănătoși. Rezistență la frig.",
+                nutritie: "Dietă variată și echilibrată, bogată în alimente integrale, proaspete, cu un bun aport de minerale. Accent pe alimente de sezon.",
+                suplimente: "Suplimente de întreținere dacă este necesar, conform nevoilor individuale.",
+                emotional: "Curaj, voință, siguranță, capacitatea de a lua decizii clare, încredere în sine. Echilibru emoțional, capacitate de a gestiona stresul, prospețime psihică. Lipsa fricii și a paranoiei.",
+                relatiiParinti: "Echilibru între influența maternă (hrănire, acceptare) și autoritatea paternă (structură, direcție), permițând o bună integrare a ambelor aspecte în propria personalitate. Capacitate de a te simți iubit și acceptat.",
+                terapie: "Menținerea obiceiurilor sănătoase. Continuarea practicilor de mindfulness și meditație. Cultivarea recunoștinței și a relațiilor pozitive. Explorarea continuă a sinelui pentru creștere personală."
+            },
+            {
+                stare: "Dezechilibru ușor",
+                fiziologic: "Rigiditate cervicală ușoară, migrene ușoare, dureri ușoare în zona spatelui. Senzație ușoară de greutate în ochi, cap, rigiditatea ușoară a gambelor. Inflamație ușoară a prostatei sau hemoroizi. Urină ușor densă.",
+                nutritie: "Dietă echilibrată, cu atenție la alimentele care pot genera 'căldură' sau stimula excesiv. Hidratare adecvată. Consum de alimente care susțin detoxifierea.",
+                suplimente: "Antioxidanți de bază, suport pentru detoxifiere.",
+                emotional: "Ușoară stare de stres, incapacitate ușoară de relaxare. Ușor iritabil, cinic, neinteresat de punctul de vedere al altora, ușor intolerant, încăpățânat. Ușoare probleme în relația de cuplu.",
+                relatiiParinti: "Unele tensiuni persistente sau neînțelegeri subtile legate de influența paternă, care pot duce la o presiune internă și la dificultăți în acceptarea lor așa cum sunt.",
+                terapie: "Reevaluarea obiectivelor și a așteptărilor. Practici de relaxare pentru a reduce iritabilitatea. Exerciții de conștientizare a emoțiilor. Dialog deschis cu părinții pentru a rezolva tensiunile."
+            },
+            {
+                stare: "Hiperfuncție moderată",
+                fiziologic: "Rigiditate cervicală, migrene, dureri în zona spatelui. Senzație de greutate în ochi, cap, rigiditatea gambelor. Inflamație a prostatei sau hemoroizi. Urină densă. Sistem nervos autonom hiperactiv, stare de stres, incapacitate de relaxare.",
+                nutritie: "Nevoie de alimente care 'răcoresc' și 'drenează' excesul de Yang. Evitarea alimentelor picante, prăjite, alcoolului, cofeinei. Hidratare adecvată. Dietă antiinflamatorie.",
+                suplimente: "Antioxidanți, plante cu efect calmant și antiinflamator, suport pentru detoxifiere.",
+                emotional: "Stare de stres, incapacitate de relaxare. Iritabil, cinic, neinteresat de punctul de vedere și părerile altora, intolerant, încăpățânat. Probleme în relația de cuplu (gelozie, certuri).",
+                relatiiParinti: "Conflicte deschise sau o rebeliune activă împotriva autorității paterne, ceea ce poate duce la o stare de tensiune internă și la incapacitatea de a integra lecțiile de viață.",
+                terapie: "Tehnici de gestionare a furiei și nerăbdării. Meditații de acceptare și renunțare la control. Terapie pentru a explora relația cu autoritatea paternă. Activități care canalizează energia în mod constructiv."
+            },
+            {
+                stare: "Hiperfuncție severă",
+                fiziologic: "Rigiditate cervicală severă, migrene cronice, dureri paralizante în zona spatelui. Senzație de greutate extremă în ochi, cap, rigiditatea severă a gambelor. Inflamație cronică severă a prostatei sau hemoroizi persistenți. Urină foarte densă și închisă la culoare. Sistem nervos autonom hiperactiv și dezechilibrat sever, stare de stres cronic, incapacitate totală de relaxare. Pot apărea stări de agitație extremă, probleme de somn severe, insomnie cronică.",
+                nutritie: "Nevoie stringentă de intervenție medicală și nutrițională specializată. Dietă strictă, care să elimine orice aliment inflamator sau care generează 'căldură' excesivă. Lichide răcoroase, ceaiuri medicinale, alimente ușoare și pure.",
+                suplimente: "Suplimente complexe pentru suport renal și nervos, antioxidanți, detoxifiere, sub strictă supraveghere medicală. Poate fi necesară terapia intensivă.",
+                emotional: "Stare de stres cronic și incontrolabil, incapacitate totală de relaxare. Iritabil extrem, cinic, complet neinteresat de punctul de vedere al altora, intolerant, încăpățânat extrem. Probleme severe în relația de cuplu (gelozie, certuri). Agitație extremă, probleme de somn severe, insomnie cronică, stări de panică și anxietate generalizată.",
+                relatiiParinti: "Refuz total de a se conforma sau de a accepta figura paternă, ducând la un conflict interior devastator, care erodează sentimentul de siguranță și liniște. Poate fi o rebeliune extremă împotriva structurii și autorității, cu consecințe grave asupra sănătății.",
+                terapie: "Intervenție medicală și psihologică urgentă. Terapie intensivă pentru gestionarea stresului și a agitației. Meditații de iertare și acceptare. Lucrul profund cu traumele legate de autoritate și control. Reconstruirea relației cu sinele și cu lumea."
+            }
+        ];
+
+
+        // This function needs to be global to be called by onchange
+        function afiseazaInformatii(meridianId, index) {
+            let data;
+            if (meridianId === 'vezica-urinara') {
+                data = meridianUrinaryBladderData[index];
+            }
+            
+            const infoDisplay = document.getElementById(`infoDisplay-${meridianId}`);
+            infoDisplay.innerHTML = `
+                <h3>Stare: ${data.stare}</h3>
+                <p><strong>Fiziologic:</strong> ${data.fiziologic}</p>
+                <p><strong>Nutriție:</strong> ${data.nutritie}</p>
+                <p><strong>Suplimente:</strong> ${data.suplimente}</p>
+                <p><strong>Emoțional:</strong> ${data.emotional}</p>
+                <p><strong>Relații cu părinții:</strong> ${data.relatiiParinti}</p>
+                <p><strong>Terapie:</strong> ${data.terapie}</p>
+            `;
+        }
+
+        // This function needs to be global to be called by onchange
+        function mutaSageata(meridianId, index) {
+            const total = 7;
+            const procent = (index / (total - 1)) * 100;
+            document.getElementById(`indicator-${meridianId}`).style.left = `${procent}%`;
+            afiseazaInformatii(meridianId, index); // Afiseaza informatiile cand se misca sageata
+        }
+
+        // Inițializare la încărcarea paginii
+        document.addEventListener('DOMContentLoaded', () => {
+            const selectUrinaryBladder = document.querySelector('select[onchange*="vezica-urinara"]');
+            if (selectUrinaryBladder) {
+                mutaSageata('vezica-urinara', selectUrinaryBladder.value);
+            }
+        });
+    </script>
