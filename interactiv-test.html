@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meridian Stomac – Infografic Interactiv</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Meridian Stomac – Infografic Extins</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -93,9 +93,7 @@
     <div class="arrow" id="indicator" style="left: 50%;"></div>
   </div>
 
-  <div class="content-box" id="infoBox">
-    <!-- Informațiile se vor actualiza din JavaScript -->
-  </div>
+  <div class="content-box" id="infoBox"></div>
 
   <script>
     const info = [
@@ -105,7 +103,8 @@
         nutritie: "Supe calde, ghimbir, orez, dovleac, morcov, carne albă fiartă.",
         suplimente: "Enzime digestive, zinc, ghimbir, vitamina B6.",
         parinti: "Deficit în relația cu mama, lipsă de hrănire emoțională.",
-        terapie: "Masaj abdominal, ST36, Qi Gong stomac, evitarea alimentelor reci."
+        terapie: "Masaj abdominal, ST36, Qi Gong stomac, evitarea alimentelor reci.",
+        emotional: "Apatie, teamă de respingere, sentiment că 'nu merit să primesc'."
       },
       {
         titlu: "Hipofuncție moderată",
@@ -113,7 +112,8 @@
         nutritie: "Terci de mei, linte, ceai cald de fenicul, chimen.",
         suplimente: "Complex B, enzime blânde, angelică.",
         parinti: "Dorință nespusă de apropiere de mamă, copil interior nevindecat.",
-        terapie: "Journaling, băi cu magneziu, yoga digestivă, aromaterapie caldă."
+        terapie: "Journaling, băi cu magneziu, yoga digestivă, aromaterapie caldă.",
+        emotional: "Sentiment de lipsă, auto-subestimare, dificultăți în exprimarea nevoilor."
       },
       {
         titlu: "Dezechilibru ușor (spre hipo)",
@@ -121,7 +121,8 @@
         nutritie: "Hummus, ovăz, sfeclă, biscuiți integrali.",
         suplimente: "Drojdii inactivate, magneziu, plante blânde.",
         parinti: "Neîncredere subtilă, lipsă de susținere afectivă.",
-        terapie: "Împământare, scris terapeutic, băi cu plante dulci."
+        terapie: "Împământare, scris terapeutic, băi cu plante dulci.",
+        emotional: "Stări ușoare de anxietate, nevoie de validare interioară."
       },
       {
         titlu: "Echilibru",
@@ -129,7 +130,8 @@
         nutritie: "Dietă variată, mese gătite, combinații corecte.",
         suplimente: "Probiotice, spirulină, turmeric.",
         parinti: "Acceptare, recunoștință față de ambii părinți.",
-        terapie: "Stretching, meditație zilnică, recunoștință activă."
+        terapie: "Stretching, meditație zilnică, recunoștință activă.",
+        emotional: "Stabilitate emoțională, deschidere către relații și încredere în sine."
       },
       {
         titlu: "Dezechilibru ușor (spre hiper)",
@@ -137,7 +139,8 @@
         nutritie: "Verdețuri gătite, salate ușoare, avocado.",
         suplimente: "Glutamină, aloe, curcuma cu piper.",
         parinti: "Presiune din partea tatălui, nevoia de validare.",
-        terapie: "Respirație 4-7-8, yoga yin, băi calmante."
+        terapie: "Respirație 4-7-8, yoga yin, băi calmante.",
+        emotional: "Neliniște, gândire accelerată, nevoia de a dovedi."
       },
       {
         titlu: "Hiperfuncție moderată",
@@ -145,7 +148,8 @@
         nutritie: "Castravete, țelină, supe răcoritoare, conopidă.",
         suplimente: "Nalbă, pătlagină, L. reuteri, triphala.",
         parinti: "Control excesiv din partea tatălui, frică de eșec.",
-        terapie: "Terapie craniosacrală, planificare blândă, respirație ghidată."
+        terapie: "Terapie craniosacrală, planificare blândă, respirație ghidată.",
+        emotional: "Perfecționism, furie reprimată, dificultăți în relaxare."
       },
       {
         titlu: "Hiperfuncție severă",
@@ -153,14 +157,14 @@
         nutritie: "Migdale, quinoa, sucuri verzi, dovlecel.",
         suplimente: "Roiniță, valeriană, adaptogeni blânzi.",
         parinti: "Conflict nerezolvat cu autoritatea / tatăl.",
-        terapie: "Iertare ghidată, meditație plex solar, detox emoțional."
+        terapie: "Iertare ghidată, meditație plex solar, detox emoțional.",
+        emotional: "Iritabilitate, impulsivitate, supraidentificare cu performanța."
       }
     ];
 
     function mutaSageata(index) {
       const procent = (index / 6) * 100;
       document.getElementById('indicator').style.left = `${procent}%`;
-
       const item = info[index];
       document.getElementById('infoBox').innerHTML = `
         <h3>${item.titlu}</h3>
@@ -169,10 +173,10 @@
         <p><strong>💊 Suplimente:</strong> ${item.suplimente}</p>
         <p><strong>👪 Relație cu părinții:</strong> ${item.parinti}</p>
         <p><strong>💆 Terapie:</strong> ${item.terapie}</p>
+        <p><strong>🧠 Emoțional:</strong> ${item.emotional}</p>
       `;
     }
 
-    // inițializare la încărcare
     window.onload = () => mutaSageata(3);
   </script>
 
