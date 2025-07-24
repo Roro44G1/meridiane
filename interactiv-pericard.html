@@ -5,29 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grafic Interactiv Meridian Pericard</title>
     
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
-    
     <style>
-        /* Stiluri specifice pentru acest grafic, integrate cu style.css */
-        body {
-            background-color: #f8f9fa; /* Fundalul general al paginii pentru vizualizare */
+        /* Resetare și Stiluri Generale */
+        * {
+            box-sizing: border-box;
         }
-        .infographic-container {
-            padding: 2rem;
+
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            box-shadow: none; /* Elimină umbra principală dacă este inclus într-un container mai mare */
-            border: none; /* Elimină bordura principală */
+            min-height: 100vh;
         }
+
+        /* Containerul principal al paginii */
+        .infographic-container {
+            flex-grow: 1;
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centrează orizontal conținutul */
+        }
+        
+        /* Containerul specific al graficului */
+        .meridian-section {
+            width: 100%;
+            max-width: 700px; /* Lățime maximă aplicată aici pentru uniformitate */
+        }
+
         h2 {
-            font-family: 'Inter', sans-serif;
             font-size: 2em;
             font-weight: 700;
             color: #0A2463;
@@ -47,25 +60,29 @@
             cursor: pointer;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             transition: all 0.2s ease-in-out;
+            width: 100%;
         }
+
         select:hover {
             border-color: #0A2463;
             background-color: #d1eff6;
         }
+
         select:focus {
             outline: none;
             box-shadow: 0 0 0 3px rgba(62, 146, 204, 0.4);
         }
 
+        /* Bara de evaluare */
         .bar-container {
             position: relative;
-            width: 700px; /* Lățime mărită pentru mai mult spațiu */
-            height: 40px; /* Înălțime mărită */
+            width: 100%;
+            height: 40px;
             display: flex;
-            border: 3px solid #0A2463; /* Bordură mai închisă */
-            border-radius: 8px; /* Borduri rotunjite */
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4); /* Umbră mai pronunțată */
-            overflow: hidden; /* Asigură că segmentele respectă bordura rotunjită */
+            border: 3px solid #0A2463;
+            border-radius: 8px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
         }
 
         .segment {
@@ -74,72 +91,100 @@
             justify-content: center;
             align-items: center;
             font-weight: bold;
-            color: white; /* Text alb pentru vizibilitate */
+            color: white;
             font-size: 0.9em;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
         }
 
-        /* Culori definite conform cerințelor */
-        .segment.extreme-red { background-color: #EF4444; } /* Roșu */
-        .segment.moderate-yellow { background-color: #FACC15; } /* Galben */
-        .segment.tendency-blue { background-color: #3B82F6; } /* Albastru */
-        .segment.balanced-green { background-color: #22C55E; } /* Verde */
+        .segment.extreme-red    { background-color: #EF4444; }
+        .segment.moderate-yellow { background-color: #FACC15; }
+        .segment.tendency-blue   { background-color: #3B82F6; }
+        .segment.balanced-green  { background-color: #22C55E; }
 
         .arrow {
             position: absolute;
-            bottom: -35px; /* Ajustat pentru noua înălțime a barei */
+            bottom: 5px;
             width: 0;
             height: 0;
-            border-left: 20px solid transparent; /* Săgeată mai mare */
+            border-left: 20px solid transparent;
             border-right: 20px solid transparent;
-            border-top: 40px solid #212529; /* Vârful în jos, culoare mai închisă */
-            transform: translateX(-50%); /* Centrare perfectă */
-            transition: left 0.4s ease-in-out; /* Tranziție mai lină */
+            border-top: 40px solid #212529;
+            transform: translateX(-50%);
+            transition: left 0.4s ease-in-out;
             filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
-            z-index: 10; /* Asigură că săgeata e deasupra */
+            z-index: 10;
         }
 
+        /* Caseta de informații */
         .info-box {
             background-color: #ffffff;
             border-radius: 1rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Umbră mai pronunțată */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
             padding: 1.5rem;
-            margin-top: 3rem; /* Spațiu mai mare sub bară */
-            width: 700px; /* Lățime egală cu bara */
-            border: 1px solid #ddd; /* Bordură subtilă */
+            margin-top: 1rem;
+            width: 100%;
+            border: 1px solid #ddd;
         }
 
         .info-box h3 {
             font-size: 1.4em;
             color: #0A2463;
+            margin-top: 0;
             margin-bottom: 1rem;
             font-weight: 700;
-            border-bottom: 2px dashed #3E92CC; /* Bordură sub titlu */
+            border-bottom: 2px dashed #3E92CC;
             padding-bottom: 0.5rem;
         }
+
         .info-box p {
             font-size: 1.05em;
             margin-bottom: 0.75rem;
             color: #333;
+            line-height: 1.6;
         }
+
         .info-box ul {
-            list-style-type: disc;
+            list-style-type: '🔹';
             padding-left: 1.5rem;
             font-size: 1em;
             color: #475569;
         }
+
         .info-box li {
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.5rem;
+            padding-left: 0.5rem;
         }
-        .meridian-section {
-            width: 100%;
-            margin-bottom: 4rem;
-            padding-top: 2rem;
-            border-top: 1px dashed #ccc;
+        
+        /* Footer */
+        .footer-copyright {
+            text-align: center;
+            padding: 1rem;
+            background-color: #e9ecef;
+            color: #495057;
+            font-size: 0.9em;
+            margin-top: 2rem;
         }
-        .meridian-section:first-of-type {
-            border-top: none;
-            padding-top: 0;
+
+        /* Stiluri responsive pentru ecrane mici */
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 1.6em;
+            }
+            .bar-container {
+                height: 35px;
+            }
+            .segment {
+                font-size: 0.7em;
+            }
+            .info-box {
+                padding: 1.2rem;
+            }
+            .info-box h3 {
+                font-size: 1.2em;
+            }
+            .info-box p, .info-box ul {
+                font-size: 0.95em;
+            }
         }
     </style>
 </head>
@@ -149,12 +194,12 @@
         <div class="meridian-section">
             <h2>Evaluare interactivă: starea meridianului pericard</h2>
 
-            <select onchange="mutaSageata('pericard', this.value)">
+            <select id="select-pericard">
                 <option value="0">Hipofuncție severă</option>
                 <option value="1">Hipofuncție moderată</option>
-                <option value="2">Dezechilibru ușor</option>
+                <option value="2">Dezechilibru ușor (Hipofuncție)</option>
                 <option value="3" selected>Echilibru</option>
-                <option value="4">Dezechilibru ușor</option>
+                <option value="4">Dezechilibru ușor (Hiperfuncție)</option>
                 <option value="5">Hiperfuncție moderată</option>
                 <option value="6">Hiperfuncție severă</option>
             </select>
@@ -167,13 +212,12 @@
                 <div class="segment tendency-blue">+</div>
                 <div class="segment moderate-yellow">++</div>
                 <div class="segment extreme-red">+++</div>
-
-                <div class="arrow" id="indicator-pericard" style="left: 50%;"></div>
+                
+                <div class="arrow" id="indicator-pericard"></div>
             </div>
 
             <div id="infoDisplay-pericard" class="info-box">
-                <!-- Informațiile vor fi afișate aici -->
-            </div>
+                </div>
         </div>
     </div>
 
@@ -198,15 +242,17 @@
                 nutritie: "Dietă antiinflamatorie, cu accent pe alimente care susțin funcția cardiacă și hormonală (Omega-3, antioxidanți, fibre). Reducerea alimentelor procesate și a grăsimilor nesănătoase. Hidratare adecvată.",
                 suplimente: "CoQ10, Magneziu, Omega-3, Vitamine B, antioxidanți (vitamina C, E, seleniu), probiotice.",
                 emotional: "Nervozitate, tulburări sufletești, speriozitate/lașitate, sistem neurovegetativ ușor stimulat, nervozitate legată de orice sentiment legat de inimă. Lipsa capacității de a da și primi iubire. Râs inadecvat, zâmbet forțat, vorbire tulbure, atenție exagerată la muncă. Necesitatea recunoașterii, instabilitate emoțională, iritabilitate, bâlbâială, memorie slabă.",
-                relatiiParinti: "Dificultăți în a 'primi' iubire și suport emoțional, o tendință de a reține durerea și tristețea, de a se simți copleșit de emoțiile materne sau de lipsa de iubire din partea figurii materne. Dificultăți în a ierta și a elibera trecutul."
+                relatiiParinti: "Dificultăți în a 'primi' iubire și suport emoțional, o tendință de a reține durerea și tristețea, de a se simți copleșit de emoțiile materne sau de lipsa de iubire din partea figurii materne. Dificultăți în a ierta și a elibera trecutul.",
+                terapie: "Dietă de suport cardiac și hormonal. Jurnalism terapeutic pentru explorarea blocajelor emoționale. Meditații de acceptare și auto-compasiune. Exerciții de respirație pentru a calma sistemul nervos."
             },
             {
-                stare: "Dezechilibru ușor",
+                stare: "Dezechilibru ușor (Hipofuncție)",
                 fiziologic: "Ocazional dificultăți ușoare în a înghiți, ușoare dureri în gât. Tensiune arterială ușor scăzută, ușoare palpitații, memorie ușor afectată. Senzație de 'nod în gât'. Ușoare probleme hormonale sau de dispoziție. Palme ușor umede, ușoare bufeuri.",
                 nutritie: "Dietă echilibrată, cu accent pe alimente proaspete, bogate în vitamine și minerale. Consum regulat de alimente care susțin sănătatea cardiovasculară și hormonală. Evitarea excesului de stimulente.",
                 suplimente: "Multivitamine/minerale, suport de bază pentru inimă și hormoni.",
                 emotional: "Ușoară neliniște, dificultăți de a-și exprima emoțiile. Uneori iritabilitate sau schimbări de dispoziție. Poate fi ușor distantă emoțional sau să-și exprime greu iubirea. Necesitatea recunoașterii.",
-                relatiiParinti: "Unele tensiuni persistente sau neînțelegeri subtile legate de influența maternă, care pot duce la o presiune internă și la dificultăți în acceptarea lor așa cum sunt."
+                relatiiParinti: "Unele tensiuni persistente sau neînțelegeri subtile legate de influența maternă, care pot duce la o presiune internă și la dificultăți în acceptarea lor așa cum sunt.",
+                terapie: "Conștientizarea obiceiurilor alimentare. Practici de mindfulness pentru a reduce neliniștea. Exerciții de respirație pentru calmare. Explorarea surselor de 'hrană emoțională'."
             },
             {
                 stare: "Echilibru",
@@ -214,15 +260,17 @@
                 nutritie: "Dietă variată și echilibrată, bogată în alimente integrale, proaspete, cu un bun aport de vitamine și minerale. Accent pe alimente de sezon, care susțin energia focului.",
                 suplimente: "Suplimente de întreținere dacă este necesar, conform nevoilor individuale.",
                 emotional: "Capacitate de a da și primi iubire, compasiune, deschidere, accesibilitate. 'Inimă caldă', inimoasă. Stabilitate emoțională, receptivitate la experiențe noi, capacitate bună de a gestiona stresul, acceptare de sine și a celorlalți. Lipsa grijilor excesive.",
-                relatiiParinti: "Echilibru între influența maternă (hrănire, acceptare) și autoritatea paternă (structură, direcție), permițând o bună integrare a ambelor aspecte în propria personalitate. Capacitate de a te simți iubit și acceptat."
+                relatiiParinti: "Echilibru între influența maternă (hrănire, acceptare) și autoritatea paternă (structură, direcție), permițând o bună integrare a ambelor aspecte în propria personalitate. Capacitate de a te simți iubit și acceptat.",
+                terapie: "Menținerea obiceiurilor sănătoase. Continuarea practicilor de mindfulness și meditație. Cultivarea recunoștinței și a relațiilor pozitive. Explorarea continuă a sinelui pentru creștere personală."
             },
             {
-                stare: "Dezechilibru ușor",
+                stare: "Dezechilibru ușor (Hiperfuncție)",
                 fiziologic: "Palpitații ocazionale, ușoară hipertensiune arterială, amețeli ușoare. Oboseală ușoară, flux sanguin ușor lent. Presiune ușoară în mâini și palme, furnicături ocazionale în degete. Rigiditate ușoară în plexul solar, crampe ușoare în stomac sau intestine. Limbă cu depuneri ușoare. Tensiune ușoară în torace în zona inimii, transpirație ușoară, bufeuri ocazionale. Piele ușor sensibilă, ten ușor roșu. Gât ușor uscat, sete ușoară.",
                 nutritie: "Dietă echilibrată, cu atenție la alimentele care pot genera 'căldură' sau inflamație. Hidratare adecvată. Consum de alimente care 'răcoresc' corpul.",
                 suplimente: "Antioxidanți de bază, suport pentru detoxifiere.",
                 emotional: "Ușoară lipsă a stăpânirii de sine, tendință spre inflăcărare. Uneori râs cu glas tare, neadecvat, zâmbet în situații penibile. Vorbire ușor tulbure, atenție exagerată la muncă. Necesitatea recunoașterii.",
-                relatiiParinti: "Unele tensiuni persistente sau neînțelegeri subtile legate de influența paternă, care pot duce la o presiune internă și la dificultăți în acceptarea lor așa cum sunt."
+                relatiiParinti: "Unele tensiuni persistente sau neînțelegeri subtile legate de influența paternă, care pot duce la o presiune internă și la dificultăți în acceptarea lor așa cum sunt.",
+                terapie: "Reevaluarea obiectivelor și a așteptărilor. Practici de relaxare pentru a reduce iritabilitatea. Exerciții de conștientizare a emoțiilor. Dialog deschis cu părinții pentru a rezolva tensiunile."
             },
             {
                 stare: "Hiperfuncție moderată",
@@ -230,7 +278,8 @@
                 nutritie: "Nevoie de alimente care 'răcoresc' și 'drenează' excesul de căldură. Evitarea alimentelor picante, prăjite, alcoolului, cofeinei. Hidratare adecvată. Dietă antiinflamatorie.",
                 suplimente: "Antioxidanți, plante cu efect calmant cardiac și antiinflamator (păducel, roiniță), suport pentru detoxifiere hepatică.",
                 emotional: "Lipsa stăpânirii de sine, inflăcărare, manie. Râs cu glas tare, neadecvat, zâmbet în situații penibile, vorbire tulbure, atenție exagerată la muncă. Necesitatea recunoașterii. Poate fi obsedată de muncă, insensibilă, autodistructivă, rigidă, lucrează fără răbdare, hipersensibilă, ușor perturbată, apetit enorm.",
-                relatiiParinti: "Conflicte deschise sau o rebeliune activă împotriva autorității paterne, ceea ce poate duce la o stare de tensiune internă și la incapacitatea de a integra lecțiile de viață."
+                relatiiParinti: "Conflicte deschise sau o rebeliune activă împotriva autorității paterne, ceea ce poate duce la o stare de tensiune internă și la incapacitatea de a integra lecțiile de viață.",
+                terapie: "Tehnici de gestionare a furiei și nerăbdării. Meditații de acceptare și renunțare la control. Terapie pentru a explora relația cu autoritatea paternă. Activități care canalizează energia în mod constructiv."
             },
             {
                 stare: "Hiperfuncție severă",
@@ -238,17 +287,17 @@
                 nutritie: "Nevoie stringentă de intervenție medicală și nutrițională specializată. Dietă strictă, care să elimine orice aliment inflamator sau care generează 'căldură' excesivă. Lichide răcoroase, ceaiuri medicinale, alimente ușoare și pure.",
                 suplimente: "Suplimente complexe pentru suport cardiac, antioxidanți, detoxifiere, sub strictă supraveghere medicală. Poate fi necesară terapia intensivă.",
                 emotional: "Lipsa totală a stăpânirii de sine, inflăcărare distructivă, manie severă, râs compulsiv, inadecvat, zâmbet permanent în situații penibile. Vorbire incoerentă, atenție obsesivă la muncă. Necesitatea patologică de recunoaștere. Obsedată de muncă compulsivă, insensibilă, autodistructivă, rigidă, lucrează fără răbdare, hipersensibilă, ușor perturbată, apetit enorm și necontrolat. Stare de furie și amărăciune permanentă și incontrolabilă.",
-                relatiiParinti: "Refuz total de a se conforma sau de a accepta figura paternă, ducând la un conflict interior devastator, care erodează sentimentul de siguranță și liniște. Poate fi o rebeliune extremă împotriva structurii și autorității, cu consecințe grave asupra sănătății."
+                relatiiParinti: "Refuz total de a se conforma sau de a accepta figura paternă, ducând la un conflict interior devastator, care erodează sentimentul de siguranță și liniște. Poate fi o rebeliune extremă împotriva structurii și autorității, cu consecințe grave asupra sănătății.",
+                terapie: "Intervenție medicală și psihologică urgentă. Terapie intensivă pentru gestionarea furiei și frustrării. Meditații de iertare și acceptare. Lucrul profund cu traumele legate de autoritate și control. Reconstruirea relației cu sinele și cu lumea."
             }
         ];
 
-
-        // This function needs to be global to be called by onchange
         function afiseazaInformatii(meridianId, index) {
             let data;
             if (meridianId === 'pericard') {
                 data = meridianPericardData[index];
             }
+            if (!data) return;
             
             const infoDisplay = document.getElementById(`infoDisplay-${meridianId}`);
             infoDisplay.innerHTML = `
@@ -262,19 +311,29 @@
             `;
         }
 
-        // This function needs to be global to be called by onchange
-        function mutaSageata(meridianId, index) {
-            const total = 7;
-            const procent = (index / (total - 1)) * 100;
+        function mutaSageata(meridianId, indexStr) {
+            const index = parseInt(indexStr, 10);
+            const totalSegments = 7;
+            
+            // Calculează poziția pentru centrul fiecărui segment
+            const segmentWidth = 100 / totalSegments;
+            const procent = (index * segmentWidth) + (segmentWidth / 2);
+            
             document.getElementById(`indicator-${meridianId}`).style.left = `${procent}%`;
-            afiseazaInformatii(meridianId, index); // Afiseaza informatiile cand se misca sageata
+            afiseazaInformatii(meridianId, index);
         }
 
-        // Inițializare la încărcarea paginii
         document.addEventListener('DOMContentLoaded', () => {
-            const selectPericard = document.querySelector('select[onchange*="pericard"]');
+            const selectPericard = document.getElementById('select-pericard');
+            
             if (selectPericard) {
+                // Setează starea inițială la încărcarea paginii
                 mutaSageata('pericard', selectPericard.value);
+
+                // Adaugă event listener pentru schimbări ulterioare
+                selectPericard.addEventListener('change', (event) => {
+                    mutaSageata('pericard', event.target.value);
+                });
             }
         });
     </script>
