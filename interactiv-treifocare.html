@@ -5,29 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grafic Interactiv Meridian Triplu Încălzitor</title>
     
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
-    
     <style>
-        /* Stiluri specifice pentru acest grafic, integrate cu style.css */
-        body {
-            background-color: #f8f9fa; /* Fundalul general al paginii pentru vizualizare */
+        /* Resetare și Stiluri Generale */
+        * {
+            box-sizing: border-box;
         }
-        .infographic-container {
-            padding: 2rem;
+
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            box-shadow: none; /* Elimină umbra principală dacă este inclus într-un container mai mare */
-            border: none; /* Elimină bordura principală */
+            min-height: 100vh;
         }
+
+        /* Containerul principal al paginii */
+        .infographic-container {
+            flex-grow: 1;
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centrează orizontal conținutul */
+        }
+        
+        /* Containerul specific al graficului */
+        .meridian-section {
+            width: 100%;
+            max-width: 700px; /* Lățime maximă aplicată aici pentru uniformitate */
+        }
+
         h2 {
-            font-family: 'Inter', sans-serif;
             font-size: 2em;
             font-weight: 700;
             color: #0A2463;
@@ -47,25 +60,29 @@
             cursor: pointer;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             transition: all 0.2s ease-in-out;
+            width: 100%;
         }
+
         select:hover {
             border-color: #0A2463;
             background-color: #d1eff6;
         }
+
         select:focus {
             outline: none;
             box-shadow: 0 0 0 3px rgba(62, 146, 204, 0.4);
         }
 
+        /* Bara de evaluare */
         .bar-container {
             position: relative;
-            width: 700px; /* Lățime mărită pentru mai mult spațiu */
-            height: 40px; /* Înălțime mărită */
+            width: 100%;
+            height: 40px;
             display: flex;
-            border: 3px solid #0A2463; /* Bordură mai închisă */
-            border-radius: 8px; /* Borduri rotunjite */
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4); /* Umbră mai pronunțată */
-            overflow: hidden; /* Asigură că segmentele respectă bordura rotunjită */
+            border: 3px solid #0A2463;
+            border-radius: 8px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
         }
 
         .segment {
@@ -74,72 +91,100 @@
             justify-content: center;
             align-items: center;
             font-weight: bold;
-            color: white; /* Text alb pentru vizibilitate */
+            color: white;
             font-size: 0.9em;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
         }
 
-        /* Culori definite conform cerințelor */
-        .segment.extreme-red { background-color: #EF4444; } /* Roșu */
-        .segment.moderate-yellow { background-color: #FACC15; } /* Galben */
-        .segment.tendency-blue { background-color: #3B82F6; } /* Albastru */
-        .segment.balanced-green { background-color: #22C55E; } /* Verde */
+        .segment.extreme-red    { background-color: #EF4444; }
+        .segment.moderate-yellow { background-color: #FACC15; }
+        .segment.tendency-blue   { background-color: #3B82F6; }
+        .segment.balanced-green  { background-color: #22C55E; }
 
         .arrow {
             position: absolute;
-            bottom: -35px; /* Ajustat pentru noua înălțime a barei */
+            bottom: 5px;
             width: 0;
             height: 0;
-            border-left: 20px solid transparent; /* Săgeată mai mare */
+            border-left: 20px solid transparent;
             border-right: 20px solid transparent;
-            border-top: 40px solid #212529; /* Vârful în jos, culoare mai închisă */
-            transform: translateX(-50%); /* Centrare perfectă */
-            transition: left 0.4s ease-in-out; /* Tranziție mai lină */
+            border-top: 40px solid #212529;
+            transform: translateX(-50%);
+            transition: left 0.4s ease-in-out;
             filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
-            z-index: 10; /* Asigură că săgeata e deasupra */
+            z-index: 10;
         }
 
+        /* Caseta de informații */
         .info-box {
             background-color: #ffffff;
             border-radius: 1rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Umbră mai pronunțată */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
             padding: 1.5rem;
-            margin-top: 3rem; /* Spațiu mai mare sub bară */
-            width: 700px; /* Lățime egală cu bara */
-            border: 1px solid #ddd; /* Bordură subtilă */
+            margin-top: 1rem;
+            width: 100%;
+            border: 1px solid #ddd;
         }
 
         .info-box h3 {
             font-size: 1.4em;
             color: #0A2463;
+            margin-top: 0;
             margin-bottom: 1rem;
             font-weight: 700;
-            border-bottom: 2px dashed #3E92CC; /* Bordură sub titlu */
+            border-bottom: 2px dashed #3E92CC;
             padding-bottom: 0.5rem;
         }
+
         .info-box p {
             font-size: 1.05em;
             margin-bottom: 0.75rem;
             color: #333;
+            line-height: 1.6;
         }
+
         .info-box ul {
-            list-style-type: disc;
+            list-style-type: '🔹';
             padding-left: 1.5rem;
             font-size: 1em;
             color: #475569;
         }
+
         .info-box li {
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.5rem;
+            padding-left: 0.5rem;
         }
-        .meridian-section {
-            width: 100%;
-            margin-bottom: 4rem;
-            padding-top: 2rem;
-            border-top: 1px dashed #ccc;
+        
+        /* Footer */
+        .footer-copyright {
+            text-align: center;
+            padding: 1rem;
+            background-color: #e9ecef;
+            color: #495057;
+            font-size: 0.9em;
+            margin-top: 2rem;
         }
-        .meridian-section:first-of-type {
-            border-top: none;
-            padding-top: 0;
+
+        /* Stiluri responsive pentru ecrane mici */
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 1.6em;
+            }
+            .bar-container {
+                height: 35px;
+            }
+            .segment {
+                font-size: 0.7em;
+            }
+            .info-box {
+                padding: 1.2rem;
+            }
+            .info-box h3 {
+                font-size: 1.2em;
+            }
+            .info-box p, .info-box ul {
+                font-size: 0.95em;
+            }
         }
     </style>
 </head>
@@ -149,12 +194,12 @@
         <div class="meridian-section">
             <h2>Evaluare interactivă: starea meridianului triplu încălzitor</h2>
 
-            <select onchange="mutaSageata('triplu-incalzitor', this.value)">
+            <select id="select-triplu-incalzitor">
                 <option value="0">Hipofuncție severă</option>
                 <option value="1">Hipofuncție moderată</option>
-                <option value="2">Dezechilibru ușor</option>
+                <option value="2">Dezechilibru ușor (Hipofuncție)</option>
                 <option value="3" selected>Echilibru</option>
-                <option value="4">Dezechilibru ușor</option>
+                <option value="4">Dezechilibru ușor (Hiperfuncție)</option>
                 <option value="5">Hiperfuncție moderată</option>
                 <option value="6">Hiperfuncție severă</option>
             </select>
@@ -167,13 +212,12 @@
                 <div class="segment tendency-blue">+</div>
                 <div class="segment moderate-yellow">++</div>
                 <div class="segment extreme-red">+++</div>
-
-                <div class="arrow" id="indicator-triplu-incalzitor" style="left: 50%;"></div>
+                
+                <div class="arrow" id="indicator-triplu-incalzitor"></div>
             </div>
 
             <div id="infoDisplay-triplu-incalzitor" class="info-box">
-                <!-- Informațiile vor fi afișate aici -->
-            </div>
+                </div>
         </div>
     </div>
 
@@ -202,7 +246,7 @@
                 terapie: "Dietă de suport metabolic. Jurnalism terapeutic pentru explorarea sentimentelor de îngrijorare și hipersensibilitate. Meditații de acceptare și de cultivare a încrederii. Exerciții de *Qi Gong* sau *Tai Chi* pentru a stimula fluxul energetic."
             },
             {
-                stare: "Dezechilibru ușor",
+                stare: "Dezechilibru ușor (Hipofuncție)",
                 fiziologic: "Senzație ușoară de frig, mâini și picioare ușor reci. Ocazional infecții minore ale urechii sau gâtului. Ușoară transpirație excesivă. Energie ușor scăzută. Păr sau piele ușor subțiate. Tensiune arterială ușor mică, ochi ușor obosiți.",
                 nutritie: "Dietă echilibrată, cu accent pe alimente proaspete, bogate în vitamine și minerale. Consum regulat de alimente care susțin metabolismul. Evitarea excesului de lactate și alimente reci.",
                 suplimente: "Multivitamine/minerale, suport de bază pentru energie.",
@@ -220,7 +264,7 @@
                 terapie: "Menținerea obiceiurilor sănătoase. Continuarea practicilor de mindfulness și meditație. Cultivarea recunoștinței și a relațiilor pozitive. Explorarea continuă a sinelui pentru creștere personală."
             },
             {
-                stare: "Dezechilibru ușor",
+                stare: "Dezechilibru ușor (Hiperfuncție)",
                 fiziologic: "Ușoară disfuncție a somnului. Ușoară predispoziție la îmbolnăvirea inflamatorie a sistemului limfatic, secreție ușoară a cavităților nazale. Posibilă ușoară parodontoză. Ușoare iritații și mâncărimi ale pielii. Senzație ușoară de apăsare în piept. Ușoară senzație de picioare grele.",
                 nutritie: "Dietă echilibrată, cu atenție la alimentele care pot genera 'căldură' sau stimula excesiv. Hidratare adecvată. Consum de alimente care susțin detoxifierea.",
                 suplimente: "Antioxidanți de bază, suport pentru detoxifiere.",
@@ -248,13 +292,12 @@
             }
         ];
 
-
-        // This function needs to be global to be called by onchange
         function afiseazaInformatii(meridianId, index) {
             let data;
             if (meridianId === 'triplu-incalzitor') {
                 data = meridianTripleHeaterData[index];
             }
+            if (!data) return;
             
             const infoDisplay = document.getElementById(`infoDisplay-${meridianId}`);
             infoDisplay.innerHTML = `
@@ -268,19 +311,29 @@
             `;
         }
 
-        // This function needs to be global to be called by onchange
-        function mutaSageata(meridianId, index) {
-            const total = 7;
-            const procent = (index / (total - 1)) * 100;
+        function mutaSageata(meridianId, indexStr) {
+            const index = parseInt(indexStr, 10);
+            const totalSegments = 7;
+            
+            // Calculează poziția pentru centrul fiecărui segment
+            const segmentWidth = 100 / totalSegments;
+            const procent = (index * segmentWidth) + (segmentWidth / 2);
+            
             document.getElementById(`indicator-${meridianId}`).style.left = `${procent}%`;
-            afiseazaInformatii(meridianId, index); // Afiseaza informatiile cand se misca sageata
+            afiseazaInformatii(meridianId, index);
         }
 
-        // Inițializare la încărcarea paginii
         document.addEventListener('DOMContentLoaded', () => {
-            const selectTripleHeater = document.querySelector('select[onchange*="triplu-incalzitor"]');
-            if (selectTripleHeater) {
-                mutaSageata('triplu-incalzitor', selectTripleHeater.value);
+            const selectTripluIncalzitor = document.getElementById('select-triplu-incalzitor');
+            
+            if (selectTripluIncalzitor) {
+                // Setează starea inițială la încărcarea paginii
+                mutaSageata('triplu-incalzitor', selectTripluIncalzitor.value);
+
+                // Adaugă event listener pentru schimbări ulterioare
+                selectTripluIncalzitor.addEventListener('change', (event) => {
+                    mutaSageata('triplu-incalzitor', event.target.value);
+                });
             }
         });
     </script>
