@@ -101,6 +101,7 @@
         .segment.tendency-blue   { background-color: #3B82F6; }
         .segment.balanced-green  { background-color: #22C55E; }
 
+        /* MODIFICAT: Regula .arrow a fost înlocuită complet */
         .arrow {
             position: absolute;
             bottom: 5px; /* Săgeata este acum mai aproape de bară */
@@ -121,7 +122,7 @@
             border-radius: 1rem;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
             padding: 1.5rem;
-            margin-top: 3.5rem; /* Spațiu ajustat pentru noua poziție a săgeții */
+            margin-top: 1rem; /* Spațiu ajustat */
             width: 100%;
             border: 1px solid #ddd;
         }
@@ -176,15 +177,10 @@
             .segment {
                 font-size: 0.7em;
             }
-            .arrow {
-                bottom: -15px; /* Poziție ajustată pentru mobil */
-                border-left-width: 15px;
-                border-right-width: 15px;
-                border-top-width: 30px;
-            }
+            /* Am eliminat suprascrierea pentru .arrow de pe mobil,
+               pentru a folosi noua regulă universală */
             .info-box {
                 padding: 1.2rem;
-                margin-top: 3rem;
             }
             .info-box h3 {
                 font-size: 1.2em;
